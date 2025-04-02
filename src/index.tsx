@@ -59,6 +59,7 @@ export const UnlayerEditor = () => {
   const newDesign = () => {
     const unlayer = emailEditorRef.current?.editor
     unlayer?.loadDesign(JSON.parse(scratch))
+    setCurrentDesign(JSON.stringify(JSON.parse(scratch)))
   }
 
   useEffect(() => {

@@ -11,6 +11,9 @@ export const UnlayerEditor = () => {
   })
   const [currentDesign, setCurrentDesign] = useState('')
   const [emailHtml, setEmailHtml] = Retool.useStateString({ name: 'emailHtml' })
+  const [emailImage, setEmailImage] = Retool.useStateString({
+    name: 'emailImage'
+  })
   const triggerSave = Retool.useEventCallback({ name: 'triggerSave' })
   const emailEditorRef = useRef<EditorRef>(null)
   const isJson = (str: string) => {
@@ -24,12 +27,16 @@ export const UnlayerEditor = () => {
 
   const saveEmail = () => {
     const unlayer = emailEditorRef.current?.editor
-    unlayer?.exportHtml((data) => {
-      const { design, html } = data
-      setEmailDesign(JSON.stringify(design))
-      setEmailHtml(html)
-      setCurrentDesign(JSON.stringify(design))
-      triggerSave()
+    unlayer?.exportImage((data) => {
+      const { url } = data
+      setEmailImage(url || '')
+      unlayer?.exportHtml((data) => {
+        const { design, html } = data
+        setEmailDesign(JSON.stringify(design))
+        setEmailHtml(html)
+        setCurrentDesign(JSON.stringify(design))
+        triggerSave()
+      })
     })
   }
 
@@ -113,9 +120,18 @@ export const UnlayerEditor = () => {
           onChange={(e) => setCurrentDesign(e.target.value)}
         />
       </div>
-      <div>
+      <div style={{ marginBottom: '16px' }}>
         <label>Email HTML</label>
         <textarea className="nxg-textarea" value={emailHtml} disabled={true} />
+      </div>
+      <div>
+        <label>Email Image</label>
+        <input
+          type="text"
+          className="nxg-text-input"
+          value={emailImage}
+          disabled={true}
+        />
       </div>
     </div>
   )

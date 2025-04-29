@@ -56,7 +56,7 @@ export const UnlayerEditor = () => {
   const loadEmailDesignFromState = () => {
     const unlayer = emailEditorRef.current?.editor
     const parsedDesign =
-      emailDesign && isJson(emailDesign)
+      emailDesign && emailDesign !== '{}' && isJson(emailDesign)
         ? JSON.parse(emailDesign)
         : JSON.parse(scratch)
     unlayer?.loadDesign(parsedDesign)

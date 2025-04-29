@@ -102,6 +102,7 @@ export const UnlayerEditor = () => {
         options={{
           projectId: parseInt(projectId),
           version: 'latest',
+          designMode: 'edit',
           appearance: {
             theme: 'modern_light',
             panels: {
@@ -109,6 +110,9 @@ export const UnlayerEditor = () => {
                 dock: 'left'
               }
             }
+          },
+          user: {
+            id: 'admin_' + projectId
           }
         }}
       />

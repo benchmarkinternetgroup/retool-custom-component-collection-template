@@ -5,7 +5,8 @@
   "dependencies": {
     "@tryretool/custom-component-support": "latest",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-email-editor": "^1.7.11"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -32,7 +33,14 @@
     "@typescript-eslint/parser": "^7.3.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
-    "prettier": "^3.0.3",
-    "postcss-modules": "^6.0.0"
+    "postcss-modules": "^6.0.0",
+    "prettier": "^3.0.3"
+  },
+  "retoolCustomComponentLibraryConfig": {
+    "name": "UnlayerEditor",
+    "label": "unlayer editor",
+    "description": "",
+    "entryPoint": "src/index.tsx",
+    "outputPath": "dist"
   }
 }

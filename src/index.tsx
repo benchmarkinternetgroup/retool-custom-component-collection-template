@@ -16,6 +16,8 @@ export const UnlayerEditor = () => {
   })
   const triggerSave = Retool.useEventCallback({ name: 'triggerSave' })
   const emailEditorRef = useRef<EditorRef>(null)
+  const [retoolId] = Retool.useStateString({ name: 'retoolId' })
+
   const isJson = (str: string) => {
     try {
       JSON.parse(str)
@@ -112,7 +114,7 @@ export const UnlayerEditor = () => {
             }
           },
           user: {
-            id: 'admin_' + projectId
+            id: 'admin_' + projectId + '_' + retoolId
           }
         }}
       />

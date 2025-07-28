@@ -103,7 +103,7 @@ export const UnlayerEditor = () => {
         onReady={onReady}
         options={{
           projectId: parseInt(projectId),
-          version: 'latest',
+          version: '1.259.0',
           designMode: 'edit',
           appearance: {
             theme: 'modern_light',

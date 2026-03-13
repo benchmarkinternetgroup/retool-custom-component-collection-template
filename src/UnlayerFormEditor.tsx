@@ -60,7 +60,7 @@ export const UnlayerFormEditor = () => {
           user: {
             id: 'admin_' + projectId + '_' + retoolId
           },
-          customJS: 'https://app.bmenxgdev.com/blocks/editorBlocks.js'
+          customJS: ['https://app.bmenxgdev.com/blocks/WidgetFormFieldsPicker.js', 'https://app.bmenxgdev.com/blocks/editorBlocks.js']
         }}
       />
       <div style={{ marginBottom: '16px' }}>

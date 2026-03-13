@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import type { EditorRef, EmailEditorProps } from 'react-email-editor'
 import { Retool } from '@tryretool/custom-component-support'
 import { scratch } from './email-templates/scratch'
+import { scratch as formScratch } from './form-templates/scratch'
 
 export type UnlayerEditorConfig = {
   designMode?: 'edit' | 'form'
@@ -57,8 +58,22 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
     setCurrentDesign(JSON.stringify(parsedDesign))
   }
 
+  const loadFormDesignFromState = () => {
+    const unlayer = emailEditorRef.current?.editor
+    const parsedDesign =
+      emailDesign && emailDesign !== '{}' && isJson(emailDesign)
+        ? JSON.parse(emailDesign)
+        : JSON.parse(formScratch)
+    unlayer?.loadDesign(parsedDesign)
+    setCurrentDesign(JSON.stringify(parsedDesign))
+  }
+
   const onReady: EmailEditorProps['onReady'] = () => {
     loadEmailDesignFromState()
+  }
+
+  const onReadyForm: EmailEditorProps['onReady'] = () => {
+    loadFormDesignFromState()
   }
 
   const updateDesign = () => {
@@ -76,8 +91,18 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
     setCurrentDesign(JSON.stringify(JSON.parse(scratch)))
   }
 
+  const newFormDesign = () => {
+    const unlayer = emailEditorRef.current?.editor
+    unlayer?.loadDesign(JSON.parse(formScratch))
+    setCurrentDesign(JSON.stringify(JSON.parse(formScratch)))
+  }
+
   useEffect(() => {
     loadEmailDesignFromState()
+  }, [emailDesign])
+
+  useEffect(() => {
+    loadFormDesignFromState()
   }, [emailDesign])
 
   return {
@@ -91,7 +116,9 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
     designMode,
     saveEmail,
     onReady,
+    onReadyForm,
     updateDesign,
-    newDesign
+    newDesign,
+    newFormDesign,
   }
 }

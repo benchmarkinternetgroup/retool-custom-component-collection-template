@@ -13,15 +13,15 @@ export const UnlayerFormEditor = () => {
     retoolId,
     designMode,
     saveEmail,
-    onReady,
+    onReadyForm,
     updateDesign,
-    newDesign
+    newFormDesign
   } = useUnlayerEditor({ designMode: 'form' })
 
   return (
     <div>
       <div style={{ marginBottom: '16px' }}>
-        <button className="nxg-button" onClick={() => newDesign()}>
+        <button className="nxg-button" onClick={() => newFormDesign()}>
           Clear Design
         </button>
         <button
@@ -43,7 +43,7 @@ export const UnlayerFormEditor = () => {
       <EmailEditor
         style={{ width: '100%', height: '800px', marginBottom: '16px' }}
         ref={emailEditorRef}
-        onReady={onReady}
+        onReady={onReadyForm}
         options={{
           projectId: parseInt(projectId) || 0,
           version: '1.309.4',
@@ -59,7 +59,8 @@ export const UnlayerFormEditor = () => {
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId
-          }
+          },
+          customJS: 'https://app.bmenxgdev.com/blocks/editorBlocks.js'
         }}
       />
       <div style={{ marginBottom: '16px' }}>

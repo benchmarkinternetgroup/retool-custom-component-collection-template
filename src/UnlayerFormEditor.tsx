@@ -12,7 +12,7 @@ export const UnlayerFormEditor = () => {
     projectId,
     retoolId,
     designMode,
-    saveEmail,
+    saveForm,
     onReadyForm,
     updateDesign,
     newFormDesign
@@ -33,7 +33,7 @@ export const UnlayerFormEditor = () => {
         </button>
         <button
           className="nxg-button nxg-button--primary"
-          onClick={saveEmail}
+          onClick={saveForm}
           style={{ float: 'right' }}
         >
           Save Form

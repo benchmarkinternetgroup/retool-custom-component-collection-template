@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import EmailEditor from 'react-email-editor'
 import { useUnlayerEditor } from './unlayerEditorShared'
 
 export const UnlayerFormEditor = () => {
+  const [showFieldsModal, setShowFieldsModal] = useState(false)
   const {
     emailEditorRef,
     currentDesign,
@@ -34,9 +35,18 @@ export const UnlayerFormEditor = () => {
      console.log(currentFieldName, currentValue, callback)
   }
 
-  const editFormEditorAllFields = (fields: string) => {
-    console.log(fields)
+  const editFormEditorAllFields = (_fields: string) => {
+    setShowFieldsModal(true)
   }
+
+  useEffect(() => {
+    if (!showFieldsModal) return
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowFieldsModal(false)
+    }
+    window.addEventListener('keydown', onEscape)
+    return () => window.removeEventListener('keydown', onEscape)
+  }, [showFieldsModal])
 
   return (
     <div>
@@ -118,6 +128,32 @@ export const UnlayerFormEditor = () => {
           disabled={true}
         />
       </div>
+
+      {showFieldsModal && (
+        <div
+          className="nxg-modal-overlay"
+          onClick={() => setShowFieldsModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="nxg-fields-modal-title"
+        >
+          <div
+            className="nxg-modal-box"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p id="nxg-fields-modal-title">
+              Currently not available to add/remove additional fields
+            </p>
+            <button
+              type="button"
+              className="nxg-button nxg-button--primary"
+              onClick={() => setShowFieldsModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

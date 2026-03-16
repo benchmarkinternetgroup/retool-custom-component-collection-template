@@ -18,6 +18,26 @@ export const UnlayerFormEditor = () => {
     newFormDesign
   } = useUnlayerEditor({ designMode: 'form' })
 
+  type SignupFormEditorField = {
+    type: string;
+    name: string;
+    label: string;
+    options: string;
+    placeholder_text: string;
+    show_label: boolean;
+    required: boolean;
+    meta_data: object;
+    dateFormat: string;
+  };
+
+  const editFormEditorField = (currentFieldName: string, currentValue: string, callback: (newValue: SignupFormEditorField[]) => void) => {
+     console.log(currentFieldName, currentValue, callback)
+  }
+
+  const editFormEditorAllFields = (fields: string) => {
+    console.log(fields)
+  }
+
   return (
     <div>
       <div style={{ marginBottom: '16px' }}>
@@ -56,6 +76,20 @@ export const UnlayerFormEditor = () => {
                 dock: 'left'
               }
             }
+          },
+          tools: {
+            'custom#custom_form_block': {
+                    properties: {
+                        fields: {
+                            editor: {
+                                data: {
+                                    editFormEditorField,
+                                    editFormEditorAllFields,
+                                },
+                            },
+                        },
+                    },
+                },
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId

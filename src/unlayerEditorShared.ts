@@ -33,7 +33,7 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
 
   const designMode = config?.designMode ?? 'edit'
 
-  const saveEmail = () => {
+  const saveDesign = () => {
     const unlayer = emailEditorRef.current?.editor
     unlayer?.exportImage((data) => {
       const { url } = data
@@ -46,34 +46,6 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
         triggerSave()
       })
     })
-  }
-
-  const saveForm = () => {
-    const unlayer = emailEditorRef.current?.editor
-    unlayer?.exportImage((data) => {
-      const { url } = data
-      setEmailImage(url || '')
-      unlayer?.exportHtml((data) => {
-        const { design, html } = data
-        const extractedFormCss = extractCssFromDesign(html);
-        const extractedFormBodyHtml = extractBodyHtmlFromDesign(html);
-        const htmlToSave =  extractedFormCss && extractedFormBodyHtml ? `<style>${extractedFormCss}</style>\n${extractedFormBodyHtml}` : html;
-        setEmailDesign(JSON.stringify(design))
-        setEmailHtml(htmlToSave)
-        setCurrentDesign(JSON.stringify(design))
-        triggerSave()
-      })
-    })
-  }
-
-  const extractCssFromDesign = (html: string) => {
-    const css = html.match(/<style[^>]*>([\s\S]*?)<\/style>/);
-    return css ? css[1] : '';
-  }
-
-  const extractBodyHtmlFromDesign = (html: string) => {
-    const bodyHtml = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
-    return bodyHtml ? bodyHtml[1] : '';
   }
 
   const loadEmailDesignFromState = () => {
@@ -142,8 +114,7 @@ export const useUnlayerEditor = (config?: UnlayerEditorConfig) => {
     projectId,
     retoolId,
     designMode,
-    saveEmail,
-    saveForm,
+    saveDesign,
     onReady,
     onReadyForm,
     updateDesign,

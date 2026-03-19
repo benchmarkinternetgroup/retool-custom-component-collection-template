@@ -12,7 +12,7 @@ export const UnlayerEditor = () => {
     projectId,
     retoolId,
     designMode,
-    saveEmail,
+    saveDesign,
     onReady,
     updateDesign,
     newDesign
@@ -33,7 +33,7 @@ export const UnlayerEditor = () => {
         </button>
         <button
           className="nxg-button nxg-button--primary"
-          onClick={saveEmail}
+          onClick={saveDesign}
           style={{ float: 'right' }}
         >
           Save Email

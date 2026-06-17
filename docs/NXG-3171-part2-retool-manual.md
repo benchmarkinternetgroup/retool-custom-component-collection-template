@@ -9,6 +9,7 @@ The component (v5) now emits an image **upload / list / delete** request as comp
 
 - **Resource:** `Admin APIs` (`a9a4ce61-d305-4635-9fbe-0776286d6e8a`) — holds the admin token; **do not add an `Authorization` header**, the resource handles auth.
 - **URL base:** `https://api-{{ regionParam }}-a.{{ retoolContext.configVars.domain }}/api/admin/template-image`
+- **`regionParam` = `"us-west-2"` (constant).** The URL needs `regionParam`, but unlike the account-scoped admin queries there is no per-record region here — **template galleries are region-pinned to us-west-2** (every gallery bucket/table is `*-us-west-2` across all environments). So each REST query below references `{{ regionParam }}` and each JS wrapper passes `additionalScope: { regionParam: 'us-west-2' }`. *(Simpler alternative: hardcode `api-us-west-2-a.…` directly in each query URL and skip the additionalScope entirely — same result, since the region never varies for templates.)*
 - **Editor instances:** `unlayerEditor1` (email, in `unlayerModal`) and `unlayerEditor2` (form, in `formUnlayerModal`).
 
 ### The component's v5 interface (read these names carefully)
@@ -44,6 +45,8 @@ Existing props (`emailDesign`, `emailHtml`, `emailImage`, `projectId`, `triggerS
 ---
 
 ## Step 1 — Multipart sanity check (do this once, before wiring everything)
+
+> ✅ **Confirmed 2026-06-17 (dev):** the shape below works as-is — `201`, file stored at `…/template-uploads/<uuid>/pixel.png`. Retool decoded **raw base64** from key **`base64Data`**, with `name` → filename and `type` → Content-Type. This is exactly what the v5 component emits, so **no component change is needed**. You can skip ahead to Step 2 (kept here for reference / other environments).
 
 Prove the file-object shape works against the real endpoint before building six queries.
 
@@ -83,7 +86,9 @@ Create three REST queries, three JS queries, three event handlers, three result 
 ```js
 const req = unlayerEditor1.imageUploadRequest;
 try {
-  const res = await uploadTemplateImageRest1.trigger();
+  const res = await uploadTemplateImageRest1.trigger({
+    additionalScope: { regionParam: 'us-west-2' } // templates are region-pinned to us-west-2
+  });
   return { requestId: req.requestId, url: res.url };
 } catch (e) {
   return { requestId: req.requestId, error: e?.message ?? String(e) };
@@ -105,7 +110,9 @@ try {
 ```js
 const req = unlayerEditor1.userUploadsRequest;
 try {
-  const res = await listTemplateImagesRest1.trigger();
+  const res = await listTemplateImagesRest1.trigger({
+    additionalScope: { regionParam: 'us-west-2' }
+  });
   return { requestId: req.requestId, files: res.files, total: res.total, page: req.page, perPage: req.perPage };
 } catch (e) {
   return { requestId: req.requestId, error: e?.message ?? String(e) };
@@ -126,7 +133,9 @@ try {
 ```js
 const req = unlayerEditor1.imageRemoveRequest;
 try {
-  await deleteTemplateImageRest1.trigger();
+  await deleteTemplateImageRest1.trigger({
+    additionalScope: { regionParam: 'us-west-2' }
+  });
   return { requestId: req.requestId };
 } catch (e) {
   return { requestId: req.requestId, error: e?.message ?? String(e) };
@@ -141,7 +150,7 @@ try {
 
 ## Step 3 — Wire `unlayerEditor2` (form)
 
-Repeat **all of Step 2**, replacing every `unlayerEditor1` → `unlayerEditor2` and every `…1` query name → `…2`. Six new queries:
+Repeat **all of Step 2**, replacing every `unlayerEditor1` → `unlayerEditor2` and every `…1` query name → `…2`. Each `…2` JS wrapper passes the same `additionalScope: { regionParam: 'us-west-2' }`. Six new queries:
 
 | Op | REST query | JS query | Event | Binds `unlayerEditor2.…` |
 |----|------------|----------|-------|--------------------------|

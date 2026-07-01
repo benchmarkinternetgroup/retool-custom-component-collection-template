@@ -21,8 +21,11 @@ export const UnlayerFormEditor = () => {
     fieldName: string
     fields: SignupFormEditorField[]
   } | null>(null)
-  const [editFieldDraft, setEditFieldDraft] = useState<SignupFormEditorField | null>(null)
-  const editFormEditorFieldCallbackRef = useRef<((newValue: SignupFormEditorField[]) => void) | null>(null)
+  const [editFieldDraft, setEditFieldDraft] =
+    useState<SignupFormEditorField | null>(null)
+  const editFormEditorFieldCallbackRef = useRef<
+    ((newValue: SignupFormEditorField[]) => void) | null
+  >(null)
   const {
     emailEditorRef,
     currentDesign,
@@ -43,7 +46,9 @@ export const UnlayerFormEditor = () => {
     currentValue: string,
     callback: (newValue: SignupFormEditorField[]) => void
   ) => {
-    const currentFormFieldValue = isJson(currentValue) ? JSON.parse(currentValue) : []
+    const currentFormFieldValue = isJson(currentValue)
+      ? JSON.parse(currentValue)
+      : []
     if (currentFieldName && currentFormFieldValue.length > 0) {
       const fields = currentFormFieldValue as SignupFormEditorField[]
       const matchingField = fields.find((f) => f.name === currentFieldName)
@@ -121,7 +126,7 @@ export const UnlayerFormEditor = () => {
         onReady={onReadyForm}
         options={{
           projectId: parseInt(projectId) || 0,
-          version: '1.309.4',
+          version: '1.417.0',
           designMode,
           displayMode: 'web',
           appearance: {
@@ -134,22 +139,25 @@ export const UnlayerFormEditor = () => {
           },
           tools: {
             'custom#custom_form_block': {
-                    properties: {
-                        fields: {
-                            editor: {
-                                data: {
-                                    editFormEditorField,
-                                    editFormEditorAllFields,
-                                },
-                            },
-                        },
-                    },
-                },
+              properties: {
+                fields: {
+                  editor: {
+                    data: {
+                      editFormEditorField,
+                      editFormEditorAllFields
+                    }
+                  }
+                }
+              }
+            }
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId
           },
-          customJS: ['https://app.bmenxgdev.com/blocks/WidgetFormFieldsPicker.js', 'https://app.bmenxgdev.com/blocks/editorBlocks.js']
+          customJS: [
+            'https://app.bmenxgdev.com/blocks/WidgetFormFieldsPicker.js',
+            'https://app.bmenxgdev.com/blocks/editorBlocks.js'
+          ]
         }}
       />
       <div style={{ marginBottom: '16px' }}>
@@ -218,7 +226,10 @@ export const UnlayerFormEditor = () => {
               Edit field
             </h2>
             <div style={{ marginBottom: '12px' }}>
-              <label htmlFor="edit-form-field-label" style={{ display: 'block', marginBottom: '4px' }}>
+              <label
+                htmlFor="edit-form-field-label"
+                style={{ display: 'block', marginBottom: '4px' }}
+              >
                 Form label text <span style={{ color: 'red' }}>*</span>
               </label>
               <input
@@ -226,22 +237,42 @@ export const UnlayerFormEditor = () => {
                 type="text"
                 className="nxg-text-input"
                 value={editFieldDraft.label}
-                onChange={(e) => setEditFieldDraft({ ...editFieldDraft, label: e.target.value })}
+                onChange={(e) =>
+                  setEditFieldDraft({
+                    ...editFieldDraft,
+                    label: e.target.value
+                  })
+                }
                 maxLength={255}
                 style={{ width: '100%' }}
               />
             </div>
-            <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div
+              style={{
+                marginBottom: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
               <span>Show label</span>
               <input
                 type="checkbox"
                 id="edit-form-show-label"
                 checked={editFieldDraft.show_label}
-                onChange={(e) => setEditFieldDraft({ ...editFieldDraft, show_label: e.target.checked })}
+                onChange={(e) =>
+                  setEditFieldDraft({
+                    ...editFieldDraft,
+                    show_label: e.target.checked
+                  })
+                }
               />
             </div>
             <div style={{ marginBottom: '12px' }}>
-              <label htmlFor="edit-form-placeholder" style={{ display: 'block', marginBottom: '4px' }}>
+              <label
+                htmlFor="edit-form-placeholder"
+                style={{ display: 'block', marginBottom: '4px' }}
+              >
                 Placeholder text
               </label>
               <input
@@ -250,26 +281,51 @@ export const UnlayerFormEditor = () => {
                 className="nxg-text-input"
                 value={editFieldDraft.placeholder_text}
                 onChange={(e) =>
-                  setEditFieldDraft({ ...editFieldDraft, placeholder_text: e.target.value })
+                  setEditFieldDraft({
+                    ...editFieldDraft,
+                    placeholder_text: e.target.value
+                  })
                 }
                 maxLength={255}
                 style={{ width: '100%' }}
               />
             </div>
-            <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div
+              style={{
+                marginBottom: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
               <input
                 type="checkbox"
                 id="edit-form-required"
                 checked={editFieldDraft.required}
                 disabled={editFieldDraft.type === 'email'}
-                onChange={(e) => setEditFieldDraft({ ...editFieldDraft, required: e.target.checked })}
+                onChange={(e) =>
+                  setEditFieldDraft({
+                    ...editFieldDraft,
+                    required: e.target.checked
+                  })
+                }
               />
               <label htmlFor="edit-form-required" style={{ margin: 0 }}>
                 Required field
               </label>
             </div>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-              <button type="button" className="nxg-button" onClick={closeEditFieldModal}>
+            <div
+              style={{
+                display: 'flex',
+                gap: '8px',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <button
+                type="button"
+                className="nxg-button"
+                onClick={closeEditFieldModal}
+              >
                 Cancel
               </button>
               <button
@@ -277,8 +333,11 @@ export const UnlayerFormEditor = () => {
                 className="nxg-button nxg-button--primary"
                 disabled={!editFieldDraft.label.trim()}
                 onClick={() => {
-                  const updatedFormFields = editFieldModalData.fields.map((field) =>
-                    field.name === editFieldModalData.fieldName ? editFieldDraft : field
+                  const updatedFormFields = editFieldModalData.fields.map(
+                    (field) =>
+                      field.name === editFieldModalData.fieldName
+                        ? editFieldDraft
+                        : field
                   )
                   updateEditorFields(updatedFormFields)
                 }}

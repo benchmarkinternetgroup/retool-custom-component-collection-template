@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import EmailEditor from 'react-email-editor'
 import { useUnlayerEditor, isJson } from './unlayerEditorShared'
+import { CUSTOM_FONTS } from './constants'
 
 type SignupFormEditorField = {
   type: string
@@ -157,7 +158,15 @@ export const UnlayerFormEditor = () => {
           customJS: [
             'https://app.bmenxgdev.com/blocks/WidgetFormFieldsPicker.js',
             'https://app.bmenxgdev.com/blocks/editorBlocks.js'
-          ]
+          ],
+          fonts: {
+            showDefaultFonts: true,
+            customFonts: CUSTOM_FONTS as {
+              label: string
+              value: string
+              url: string
+            }[]
+          }
         }}
       />
       <div style={{ marginBottom: '16px' }}>

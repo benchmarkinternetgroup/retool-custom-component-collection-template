@@ -1,6 +1,7 @@
 import React from 'react'
 import EmailEditor from 'react-email-editor'
 import { useUnlayerEditor } from './unlayerEditorShared'
+import { CUSTOM_FONTS } from './constants'
 
 export const UnlayerEditor = () => {
   const {
@@ -59,6 +60,14 @@ export const UnlayerEditor = () => {
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId
+          },
+          fonts: {
+            showDefaultFonts: true,
+            customFonts: CUSTOM_FONTS as {
+              label: string
+              value: string
+              url: string
+            }[]
           }
         }}
       />

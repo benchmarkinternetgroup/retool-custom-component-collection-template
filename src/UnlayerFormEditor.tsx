@@ -127,7 +127,7 @@ export const UnlayerFormEditor = () => {
         onReady={onReadyForm}
         options={{
           projectId: parseInt(projectId) || 0,
-          version: '1.417.0',
+          version: '1.455.0',
           designMode,
           displayMode: 'web',
           appearance: {

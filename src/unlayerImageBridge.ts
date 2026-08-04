@@ -15,9 +15,6 @@
  * from the reference implementation `bme-nxg-app/src/utils/unlayerFileStorage.ts`.
  */
 
-/** Public file URL shown when an upload fails — keeps Unlayer's `done` terminal so the editor never hangs. */
-const PLACEHOLDER_IMAGE_URL = 'https://cdn.tools.unlayer.com/image/placeholder.png'
-
 /** API hard cap (bme-nxg-api FILE_UPLOAD_MAX_SIZE_BYTES = 10 MB). Reject before base64-ing what the API would refuse. */
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 
@@ -101,7 +98,7 @@ export type BridgeHandlers = {
 // Unlayer hook surface (subset we use; see unlayer-types/embed.d.ts:3066-3069)
 // ---------------------------------------------------------------------------
 
-type UnlayerImageDone = (opts: { progress?: number; url?: string }) => void
+type UnlayerImageDone = (opts: { progress?: number; url?: string; error?: boolean }) => void
 type UnlayerImageUploadFile = { attachments?: File[] }
 
 type UnlayerUserUploadImage = {
@@ -255,7 +252,7 @@ function mapFileToUnlayerImage(file: TemplateImageFile): UnlayerUserUploadImage 
 }
 
 function finishUploadWithoutUrl(done: UnlayerImageDone): void {
-  done({ progress: 100, url: PLACEHOLDER_IMAGE_URL })
+  done({ error: true })
 }
 
 // ---------------------------------------------------------------------------

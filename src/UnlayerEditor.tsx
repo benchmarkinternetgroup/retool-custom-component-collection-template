@@ -47,7 +47,7 @@ export const UnlayerEditor = () => {
         onReady={onReady}
         options={{
           projectId: parseInt(projectId) || 0,
-          version: '1.417.0',
+          version: '1.455.0',
           designMode,
           displayMode: 'email',
           appearance: {

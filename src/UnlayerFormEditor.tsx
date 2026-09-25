@@ -152,7 +152,7 @@ export const UnlayerFormEditor = () => {
               }
             }
           },
-          feature: {
+          features: {
             ai: {
               enabled: true,
               assistant: true,

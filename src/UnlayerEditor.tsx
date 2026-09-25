@@ -58,7 +58,7 @@ export const UnlayerEditor = () => {
               }
             }
           },
-          feature: {
+          features: {
             ai: {
               enabled: true,
               assistant: true,

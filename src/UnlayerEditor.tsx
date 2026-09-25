@@ -47,7 +47,7 @@ export const UnlayerEditor = () => {
         onReady={onReady}
         options={{
           projectId: parseInt(projectId) || 0,
-          version: '1.455.0',
+          version: '1.489.0',
           designMode,
           displayMode: 'email',
           appearance: {
@@ -57,6 +57,13 @@ export const UnlayerEditor = () => {
                 dock: 'left'
               }
             }
+          },
+          features: {
+            ai: {
+              enabled: true,
+              assistant: true,
+              fullTemplateGeneration: false,
+            },
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId

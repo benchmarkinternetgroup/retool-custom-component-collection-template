@@ -127,7 +127,7 @@ export const UnlayerFormEditor = () => {
         onReady={onReadyForm}
         options={{
           projectId: parseInt(projectId) || 0,
-          version: '1.455.0',
+          version: '1.489.0',
           designMode,
           displayMode: 'web',
           appearance: {
@@ -151,6 +151,13 @@ export const UnlayerFormEditor = () => {
                 }
               }
             }
+          },
+          features: {
+            ai: {
+              enabled: true,
+              assistant: true,
+              fullTemplateGeneration: false,
+            },
           },
           user: {
             id: 'admin_' + projectId + '_' + retoolId
